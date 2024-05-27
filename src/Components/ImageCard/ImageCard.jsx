@@ -1,13 +1,16 @@
-import React from "react";
-
 const ImageCard = ({ image, onImageClick }) => {
   return (
     <div className="image-card" onClick={() => onImageClick(image)}>
-      <img src={image.urls.thumb} alt={image.description} />
+      <img 
+        src={image.urls.thumb} 
+        srcSet={`${image.urls.thumb} 1x, ${image.urls.small} 2x, ${image.urls.regular} 3x`}
+        alt={image.description} 
+      />
       <div className="image-info">
         <div className="user-info">
           <img
             src={image.user.profile_image.medium}
+            srcSet={`${image.user.profile_image.small} 1x, ${image.user.profile_image.medium} 2x, ${image.user.profile_image.large} 3x`}
             alt={image.user.name}
             className="user-avatar"
           />

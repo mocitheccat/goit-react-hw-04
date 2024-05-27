@@ -32,7 +32,6 @@ body {
   align-items: center;
 }
 
-
 h1,
 h2,
 h3,
@@ -56,7 +55,6 @@ img {
   max-width: 100%;
 }
 
-
 form {
   display: flex;
   align-items: center;
@@ -69,7 +67,7 @@ button {
   padding: 10px 20px;
   border: 2px solid #121212;
   border-radius: 4px;
-  background-color: #1E1E1E;
+  background-color: #1e1e1e;
   color: #858585;
   cursor: pointer;
 }
@@ -83,7 +81,7 @@ button:focus {
 form input {
   padding: 10px 20px;
   border: 2px solid #121212;
-  background-color: #1E1E1E;
+  background-color: #1e1e1e;
   border-radius: 4px;
   color: #858585;
 }
@@ -94,11 +92,6 @@ form input:focus {
   color: #ddd;
   outline: none;
 }
-
-
-
-
-
 
 .image-card {
   margin: 10px;
@@ -157,4 +150,56 @@ form input:focus {
   justify-content: space-between;
 }
 
+.modal:focus {
+  outline: none;
+}
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(0, 0, 0, 0.68);
+}
+
+.modalImage {
+  max-height: 95vh;
+}
+
+.loader {
+  color: #fff;
+  width: 60px;
+  height: 60px;
+}
+
+/* ERRORS  */
+
+.error-msg {
+  text-align: center;
+  padding: 20px;
+}
+
+.error-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.error-image {
+  max-width: 50%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.error-msg p {
+  font-size: 24px;
+  color: #b62324;
+}

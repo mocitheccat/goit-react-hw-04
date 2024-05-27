@@ -3,6 +3,8 @@ import {
   ImageGallery,
   ImageModal,
   SearchBar,
+  Loader,
+  ErrorMsg
 } from "./Components/index.js";
 import { useEffect, useState } from "react";
 import { fetchImages } from "./API/apiFncs.js";
@@ -13,26 +15,34 @@ function App() {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [modalImage, setModalImage] = useState(null); // Corrected from modal to modalImage
+  const [modalImage, setModalImage] = useState(null);
   const [emptyQueryMessage, setEmptyQueryMessage] = useState("");
+  const [isZeroResults, setIsZeroResults] = useState(false);
 
   const imageSearch = async () => {
     setIsError(false);
     setIsLoading(true);
     setEmptyQueryMessage("");
+    setIsZeroResults(false);
 
     if (query.trim() === "") {
       setIsLoading(false);
+      setImages([]);
       setEmptyQueryMessage("Please provide a search query");
+
       return;
     }
 
     try {
       const imagesList = await fetchImages(query, page);
-      if (page === 1) {
-        setImages(imagesList); // Ensure to use results
+      if (imagesList.length === 0) {
+        setIsZeroResults(true);
       } else {
-        setImages((prevImages) => [...prevImages, ...imagesList]); // Ensure to use results
+        if (page === 1) {
+          setImages(imagesList);
+        } else {
+          setImages((prevImages) => [...prevImages, ...imagesList]);
+        }
       }
     } catch (error) {
       setIsError(true);
@@ -67,22 +77,17 @@ function App() {
   return (
     <>
       <SearchBar onSubmit={submitSearch} query={query} setQuery={setQuery} />
-      {emptyQueryMessage && <p>{emptyQueryMessage}</p>}
+      {(emptyQueryMessage || isError || isZeroResults) && (
+        <ErrorMsg
+          emptyQueryMessage={emptyQueryMessage}
+          isErrorOccured={isError}
+          isZeroResults={isZeroResults}
+        />
+      )}
       <ImageGallery images={images} onImageClick={handleImageClick} />
       {images.length > 0 && !isLoading && <Button onClick={handleLoadMore} />}
-      {isLoading && <p>Loading...</p>}
-      {isError && <p>Something went wrong...</p>}
-      <ImageModal isOpen={!!modalImage} onRequestClose={closeModal} />
-      {/*  {modalImage && (*/}
-      {/*    <div>*/}
-      {/*      <img*/}
-      {/*        src={modalImage.urls.regular}*/}
-      {/*        alt={modalImage.alt_description}*/}
-      {/*      />*/}
-      {/*      <button onClick={closeModal}>Close</button>*/}
-      {/*    </div>*/}
-      {/*  )}*/}
-      {/*</ImageModal>*/}
+      {isLoading && <Loader />}
+      <ImageModal isOpen={!!modalImage} onClose={closeModal} image={modalImage} />
     </>
   );
 }

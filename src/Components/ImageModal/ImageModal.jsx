@@ -1,28 +1,19 @@
-import React from "react";
 import ReactModal from "react-modal";
 
-const ImageModal = ({ isOpen, onRequestClose, image }) => {
+const ImageModal = ({ isOpen, onClose, image }) => {
   if (!image) return null;
-
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-    },
-  };
 
   return (
     <ReactModal
+      portalClassName='modalPortal'
+      className='modal'
+      overlayClassName='overlay'
       isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      style={customStyles}
+      ariaHideApp={false}
+      shouldCloseOnEsc={true}
+      onRequestClose={onClose}
     >
-      <img src={image.urls.regular} alt={image.alt_description} />
-      <button onClick={onRequestClose}>Close</button>
+      <img src={image.urls.regular} alt={image.alt_description} className="modalImage"/>
     </ReactModal>
   );
 };

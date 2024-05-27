@@ -12,7 +12,7 @@ export const fetchImages = async (query, page = 1) => {
         Authorization: `Client-ID ${config.apiKey}`,
       },
     });
-    return response.data.results; // Не забудьте повернути дані з відповіді
+    return response.data.results;
   } catch (err) {
     throw new Error(err.message);
   }

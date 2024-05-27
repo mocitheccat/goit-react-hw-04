@@ -1,4 +1,3 @@
-import React from "react";
 import MasonryLayout from "../Mansory.jsx";
 
 const ImageGallery = ({ images, onImageClick }) => {
